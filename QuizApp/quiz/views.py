@@ -1,9 +1,13 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+from rest_framework import viewsets
 from .models import (
     Answer, 
-    Question
+    Question,
+    UsersAnswer,
+    result,
+    Quiz
 )
 
 from .serializers import (
@@ -14,9 +18,6 @@ from .serializers import (
     resultserializers
 )
 
-from rest_framework import viewsets
-from . import models
-from quiz.models import UsersAnswer,result,Quiz
 class QuizViewSet(viewsets.ModelViewSet):
 
     serializer_class =  QuizListSerializer
