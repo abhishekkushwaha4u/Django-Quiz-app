@@ -25,13 +25,13 @@ class QuizViewSet(viewsets.ModelViewSet):
 
 class QuestionDetailViewset(viewsets.ModelViewSet):
 
-    serializer_class=QuestionSerializers
-    queryset=models.Question.objects.all()
+    serializer_class = QuestionSerializers
+    queryset = Question.objects.all()
 
 
 class SaveUsersAnswer(generics.UpdateAPIView):
     serializer_class=UsersAnswerSerializer
-    queryset=models.UsersAnswer.objects.all()
+    queryset = UsersAnswer.objects.all()
 
 class Resultview(generics.GenericAPIView):
     serializer_class=resultserializers
