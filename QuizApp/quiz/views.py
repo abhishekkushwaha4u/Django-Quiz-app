@@ -1,16 +1,26 @@
-from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from quiz.models import Answer, Question
-from quiz.serializers import QuizListSerializer, QuizListSerializer,QuestionSerializers,UsersAnswerSerializer,resultserializers
+from .models import (
+    Answer, 
+    Question
+)
+
+from .serializers import (
+    QuizListSerializer, 
+    QuizListSerializer,
+    QuestionSerializers,
+    UsersAnswerSerializer,
+    resultserializers
+)
+
 from rest_framework import viewsets
 from . import models
 from quiz.models import UsersAnswer,result,Quiz
 class QuizViewSet(viewsets.ModelViewSet):
 
     serializer_class =  QuizListSerializer
-    queryset = models.Quiz.objects.all()
+    queryset = Quiz.objects.all()
 
 class QuestionDetailViewset(viewsets.ModelViewSet):
 
@@ -26,18 +36,14 @@ class Resultview(generics.GenericAPIView):
     serializer_class=resultserializers
 
     def post(self, request, *args, **kwargs):
-        result_id = request.data['result']
-        question_id = request.data['question']
-        answer_id = request.data['answer']
+        result_id = request.data.get('result')
+        question_id = request.data.get('question')
+        answer_id = request.data.get('answer')
 
         result = get_object_or_404(QuizTaker, id=result_id)
         question = get_object_or_404(Question, id=question_id)
 
         quiz = Quiz.objects.get(slug=self.kwargs['slug'])
-
-
-
-
         correct_answers = 0
 
         for users_answer in UsersAnswer.objects.all():
